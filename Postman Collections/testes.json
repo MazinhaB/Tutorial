@@ -1,0 +1,2101 @@
+{
+	"info": {
+		"_postman_id": "74028efa-af08-45ad-9570-9885b825618a",
+		"name": "Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create new User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f8554ec5-2474-4e3d-b04d-6798a49e5ac1",
+								"exec": [
+									"pm.test('Create new User', function (){\r",
+									"    pm.response.to.have.status(201)\r",
+									"})\r",
+									"\r",
+									"\r",
+									"pm.test('Has an Id', function(){\r",
+									"    const {user} = pm.response.json();\r",
+									"    pm.environment.set('user_id', user.user_id);\r",
+									"    return 'user_id' in data;\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "10572a1a-8f8b-43af-912a-b61c700466cd",
+								"exec": [
+									" //let date = Date.now();\r",
+									"let name = pm.variables.replaceIn('{{$randomFirstName}}')\r",
+									"let email = name + '@gmail.com';\r",
+									"let phone = pm.variables.replaceIn('{{$randomPhoneNumber}}');\r",
+									"let company = pm.variables.replaceIn('{{$randomCompanySuffix}}');\r",
+									"let linkedin = name + ' ' + pm.variables.replaceIn('{{$randomLastName}}');\r",
+									"let photo = pm.variables.replaceIn('{{$randomUUID}}');\r",
+									"let password = pm.variables.replaceIn('{{$randomAlphaNumeric}}');\r",
+									"\r",
+									"pm.environment.set('usercompany', company); \r",
+									"pm.environment.set('useremail', email);\r",
+									"pm.environment.set('username', name);\r",
+									"pm.environment.set('userphone', phone);\r",
+									"pm.environment.set('userlinkedin', linkedin);\r",
+									"pm.environment.set('userphoto', photo);\r",
+									"pm.environment.set('userpassword', password);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "d6af702a-0918-4186-b526-a680745b835b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"company\": \"{{usercompany}}\",\n  \"email\": \"{{useremail}}\",\n  \"linkedin\": \"{{userlinkedin}}\",\n  \"name\": \"{{username}}\",\n  \"password\": \"{{userpassword}}\",\n  \"phone\": \"{{userphone}}\",\n  \"photo\": \"{{userphoto}}\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/users"
+					},
+					"response": [
+						{
+							"id": "e1e431f4-7fc3-49ca-9443-e4e9e159a9e4",
+							"name": "User successfully created.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"company\": \"<string>\",\n  \"email\": \"<string>\",\n  \"linkedin\": \"<string>\",\n  \"name\": \"<string>\",\n  \"password\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"photo\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/users"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						},
+						{
+							"id": "785ee242-93fd-4212-b636-11038499b0b7",
+							"name": "Unable to create user.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"company\": \"<string>\",\n  \"email\": \"<string>\",\n  \"linkedin\": \"<string>\",\n  \"name\": \"<string>\",\n  \"password\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"photo\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/users"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Login User Pass",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0a5da02d-327c-4926-bec2-1e411f150aba",
+								"exec": [
+									"pm.test('Login User Pass', function (){\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "45baedf9-7dfd-4667-9771-89b40beb2866",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"{{useremail}}\",\n  \"password\": \"{{userpassword}}\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/login"
+					},
+					"response": [
+						{
+							"id": "d65d4a74-1dc6-4aaf-a7a4-61d9680153e9",
+							"name": "User successfully logged in.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/login"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						},
+						{
+							"id": "8ae94bd7-88d9-4b28-9c8f-40555f2524e5",
+							"name": "Unable to log user in.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/login"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Login User Fail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "29e8648f-1b7a-4e38-85bc-e20eb9893097",
+								"exec": [
+									"pm.test('Login User Fail', function (){\r",
+									"    pm.response.to.have.status(400)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "6b49cf59-1554-4b56-b79d-8a587c3b9ca5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"{{useremail}}\",\n  \"password\": \"<string>\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/login"
+					},
+					"response": [
+						{
+							"id": "d673a777-0c00-4ca4-b584-7f3faf7d4c23",
+							"name": "User successfully logged in.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/login"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						},
+						{
+							"id": "093a07e5-2833-4f80-812e-4ddbc2a56d7b",
+							"name": "Unable to log user in.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/login"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Update User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6c75e1d6-de37-4da5-be07-1f3fd0e7e063",
+								"exec": [
+									"pm.test('Update User', function (){\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "4bd82cac-321a-404e-bc86-8a5934e27ef7",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "507afe4e-f2e3-4f00-9f25-f7023524f593",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"company\": \"{{$randomCompanyName}}\",\n  \"email\": \"{{useremail}}\",\n  \"linkedin\": \"{{userlinkedin}}\",\n  \"name\": \"{{username}}\",\n  \"password\": \"{{userpassword}}\",\n  \"phone\": \"{{userphone}}\",\n  \"photo\": \"{{userphoto}}\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/:user_id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":user_id"
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "{{user_id}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "34dd6fb0-fde2-4dd4-8c60-f39f1621277d",
+							"name": "User successfully updated.",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"company\": \"<string>\",\n  \"email\": \"<string>\",\n  \"linkedin\": \"<string>\",\n  \"name\": \"<string>\",\n  \"password\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"photo\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/:user_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":user_id"
+									],
+									"variable": [
+										{
+											"key": "user_id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						},
+						{
+							"id": "72daf89a-95ef-46e3-a9d5-50e9eb29405e",
+							"name": "Unable to update user.",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"company\": \"<string>\",\n  \"email\": \"<string>\",\n  \"linkedin\": \"<string>\",\n  \"name\": \"<string>\",\n  \"password\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"photo\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/:user_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":user_id"
+									],
+									"variable": [
+										{
+											"key": "user_id"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Login User Pass After Change",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0a5da02d-327c-4926-bec2-1e411f150aba",
+								"exec": [
+									"pm.test('Login User Pass', function (){\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "53788fab-d542-44e1-8d80-6b79463c687e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"{{useremail}}\",\n  \"password\": \"{{userpassword}}\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/login"
+					},
+					"response": [
+						{
+							"id": "d6d98c03-1e74-4e51-b0e6-07c3c98e9720",
+							"name": "User successfully logged in.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/login"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						},
+						{
+							"id": "70314b7c-f733-48cc-91d5-93fc722e1a59",
+							"name": "Unable to log user in.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/login"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Search User Pass",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4bf25d22-48d1-4863-bc59-106a25ff8e33",
+								"exec": [
+									"pm.test('Search User Pass', function (){\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "6a2b36c7-0a00-4c9b-88fc-55b7298f0747",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:user_id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":user_id"
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "{{user_id}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "e38b6696-7d86-42a3-90f8-90396db69409",
+							"name": "User successfully retrieved.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/:user_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":user_id"
+									],
+									"variable": [
+										{
+											"key": "user_id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						},
+						{
+							"id": "ea9a0223-2ef6-473f-b2af-acb69c25fdd5",
+							"name": "Unable to retrieve user.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/:user_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":user_id"
+									],
+									"variable": [
+										{
+											"key": "user_id"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Search User Fail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4bf25d22-48d1-4863-bc59-106a25ff8e33",
+								"exec": [
+									"pm.test('Search User Fail', function (){\r",
+									"    pm.response.to.have.status(400)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "18920829-e9e2-429e-be01-3741b6f9c700",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:user_id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":user_id"
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "{{$randomAlphaNumeric}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "be4bb499-51c8-4ce3-a7f6-56420d089cc7",
+							"name": "User successfully retrieved.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/:user_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":user_id"
+									],
+									"variable": [
+										{
+											"key": "user_id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						},
+						{
+							"id": "6e1132ec-d29c-4cf4-b3ad-72e4d45f6a42",
+							"name": "Unable to retrieve user.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/:user_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":user_id"
+									],
+									"variable": [
+										{
+											"key": "user_id"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Search User Fail After Deleting",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4bf25d22-48d1-4863-bc59-106a25ff8e33",
+								"exec": [
+									"pm.test('Search User Fail', function (){\r",
+									"    pm.response.to.have.status(400)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "1d30acb5-77f4-4ada-b58b-af9faee5fbbf",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:user_id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":user_id"
+							],
+							"variable": [
+								{
+									"id": "05a60089-9f2f-46aa-9aa7-4ef3e28f1cda",
+									"key": "user_id",
+									"value": "{{$randomAlphaNumeric}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "26545b95-9565-4147-b6cd-1c8925ea1b45",
+							"name": "User successfully retrieved.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/:user_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":user_id"
+									],
+									"variable": [
+										{
+											"key": "user_id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						},
+						{
+							"id": "a1811a45-4370-4a66-9b9d-f4a55adfe499",
+							"name": "Unable to retrieve user.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/:user_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":user_id"
+									],
+									"variable": [
+										{
+											"key": "user_id"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "List all Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c8c09b5c-0822-4523-a450-28bbdfa02bbc",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "69c6b199-3d6a-45ce-85c0-5fe8c46557a1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{baseUrl}}/users"
+					},
+					"response": [
+						{
+							"id": "357f8278-4ffd-4099-ae3d-8a766ad4fe0f",
+							"name": "All users successfully retrieved.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "{{baseUrl}}/users"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						},
+						{
+							"id": "1e8b5508-d0be-4dd4-8da7-1c6d69ab8054",
+							"name": "Unable to retrieve all users.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "{{baseUrl}}/users"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Delete User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c053e4ec-d2f1-43e3-9162-7f4d02d5f24f",
+								"exec": [
+									"pm.test('Delete User', function (){\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "157daa4d-dc84-468e-b30d-79537ece0384",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:user_id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":user_id"
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "{{user_id}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "39118aa8-ef76-4db7-8ae9-8267c8cad2ab",
+							"name": "User successfully retrieved.",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/:user_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":user_id"
+									],
+									"variable": [
+										{
+											"key": "user_id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						},
+						{
+							"id": "4f4f7064-d908-4601-a57a-742bea73a059",
+							"name": "Unable to retrieve user.",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/:user_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":user_id"
+									],
+									"variable": [
+										{
+											"key": "user_id"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						}
+					]
+				}
+			],
+			"id": "5b6ba0f9-ab1a-4369-8c15-50917fc2462f"
+		},
+		{
+			"name": "Events",
+			"item": [
+				{
+					"name": "Create new Event",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "33526aa7-e56b-42e5-9bc0-927fcf1d3dd0",
+								"exec": [
+									"let date = pm.variables.replaceIn('{{$randomDateFuture}}');\r",
+									"let description = pm.variables.replaceIn('{{$randomWords}}');\r",
+									"let eventName = pm.variables.replaceIn('{{$randomCatchPhrase}}');\r",
+									"const capacity = pm.variables.replaceIn('{{$randomInt}}');\r",
+									"\r",
+									"pm.environment.set('eventdate', date);\r",
+									"pm.environment.set('eventdescription', description);\r",
+									"pm.environment.set('eventname', eventName);\r",
+									"pm.environment.set('eventcapacity', capacity);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "db23bcac-b92f-4854-92f1-990524847360",
+								"exec": [
+									"pm.test('Create new Event', function (){\r",
+									"    pm.response.to.have.status(201)\r",
+									"})\r",
+									"\r",
+									"\r",
+									"pm.test('Has an Id', function(){\r",
+									"    const {event} = pm.response.json();\r",
+									"    pm.environment.set('event_id', event.event_id);\r",
+									"    return 'event_id' in event;\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "072fe089-6592-49db-8a92-4f8c60124559",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"date\": \"{{eventdate}}\",\n  \"description\": \"{{eventdescription}}\",\n  \"host_id\": \"{{user_id}}\",\n  \"name\": \"{{eventname}}\",\n  \"max_capacity\": {{eventcapacity}}\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/events"
+					},
+					"response": [
+						{
+							"id": "1dde5492-7f2c-49b6-b540-07e7e4e64f8e",
+							"name": "Event successfully created.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"date\": \"<dateTime>\",\n  \"description\": \"<string>\",\n  \"host_id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"max_capacity\": \"<integer>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/events"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						},
+						{
+							"id": "ddae6901-6de0-48a1-ae83-07f4496ab515",
+							"name": "Unable to create event.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"date\": \"<dateTime>\",\n  \"description\": \"<string>\",\n  \"host_id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"max_capacity\": \"<integer>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/events"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "List all Events",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "11fdb8b6-8aa3-4c8a-81fd-36d2382be8ef",
+								"exec": [
+									"pm.test(\"List all events pass\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "7ee6d18c-978b-4fa5-804a-78467fa5138d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{baseUrl}}/events"
+					},
+					"response": [
+						{
+							"id": "03a37a49-3403-4c97-b9be-338c96ee82cb",
+							"name": "All events successfully retrieved.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "{{baseUrl}}/events"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						},
+						{
+							"id": "55b64077-ac4a-4f52-b394-d3b6b35e057c",
+							"name": "Unable to retrieve all events.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "{{baseUrl}}/events"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Update an Event",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "78aa39ad-e7ac-47ff-90f8-1f3bd110b807",
+								"exec": [
+									"pm.test('Update Event', function (){\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "cdb7c7c8-61d5-43bb-9684-bfd825787165",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"date\": \"{{eventdate}}\",\n  \"description\": \"{{$randomWords}}\",\n  \"host_id\": \"{{user_id}}\",\n  \"name\": \"{{eventname}}\",\n  \"max_capacity\": \"{{eventcapacity}}\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/events/:event_id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"events",
+								":event_id"
+							],
+							"variable": [
+								{
+									"key": "event_id",
+									"value": "{{event_id}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "2d03abee-0868-4edc-9494-8c949a03064f",
+							"name": "Event successfully updated.",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"date\": \"<dateTime>\",\n  \"description\": \"<string>\",\n  \"host_id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"max_capacity\": \"<integer>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/events/:event_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"events",
+										":event_id"
+									],
+									"variable": [
+										{
+											"key": "event_id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						},
+						{
+							"id": "2d12651b-a184-462e-9f0a-91b00fe970f5",
+							"name": "Unable to update event.",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"date\": \"<dateTime>\",\n  \"description\": \"<string>\",\n  \"host_id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"max_capacity\": \"<integer>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/events/:event_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"events",
+										":event_id"
+									],
+									"variable": [
+										{
+											"key": "event_id"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Search Event",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ea2e2e7e-f037-4fa3-a77f-0ecf7c063cdc",
+								"exec": [
+									"pm.test('Search Event Pass', function (){\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "dbedd3e4-7e81-4409-af33-4dd9c9c8292d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/events/:event_id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"events",
+								":event_id"
+							],
+							"variable": [
+								{
+									"key": "event_id",
+									"value": "{{event_id}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "f1f173c6-2c48-4683-ab14-736ff8431429",
+							"name": "Event successfully retrieved.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/events/:event_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"events",
+										":event_id"
+									],
+									"variable": [
+										{
+											"key": "event_id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						},
+						{
+							"id": "e76111d6-1821-44d5-9411-04eacc60b9bc",
+							"name": "Unable to retrieve event.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/events/:event_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"events",
+										":event_id"
+									],
+									"variable": [
+										{
+											"key": "event_id"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Create new User participant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f8554ec5-2474-4e3d-b04d-6798a49e5ac1",
+								"exec": [
+									"pm.test('Create new User', function (){\r",
+									"    pm.response.to.have.status(201)\r",
+									"})\r",
+									"\r",
+									"\r",
+									"pm.test('Has an Id', function(){\r",
+									"    const {user} = pm.response.json();\r",
+									"    pm.environment.set('user_id2', user.user_id);\r",
+									"    return 'user_id2' in data;\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "10572a1a-8f8b-43af-912a-b61c700466cd",
+								"exec": [
+									" //let date = Date.now();\r",
+									"let name = pm.variables.replaceIn('{{$randomFirstName}}')\r",
+									"let email = name + '@gmail.com';\r",
+									"let phone = pm.variables.replaceIn('{{$randomPhoneNumber}}');\r",
+									"let company = pm.variables.replaceIn('{{$randomCompanySuffix}}');\r",
+									"let linkedin = name + ' ' + pm.variables.replaceIn('{{$randomLastName}}');\r",
+									"let photo = pm.variables.replaceIn('{{$randomUUID}}');\r",
+									"let password = pm.variables.replaceIn('{{$randomAlphaNumeric}}');\r",
+									"\r",
+									"pm.environment.set('usercompany', company); \r",
+									"pm.environment.set('useremail', email);\r",
+									"pm.environment.set('username', name);\r",
+									"pm.environment.set('userphone', phone);\r",
+									"pm.environment.set('userlinkedin', linkedin);\r",
+									"pm.environment.set('userphoto', photo);\r",
+									"pm.environment.set('userpassword', password);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "dc106406-170d-4df3-987a-b34afa78840c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"company\": \"{{usercompany}}\",\n  \"email\": \"{{useremail}}\",\n  \"linkedin\": \"{{userlinkedin}}\",\n  \"name\": \"{{username}}\",\n  \"password\": \"{{userpassword}}\",\n  \"phone\": \"{{userphone}}\",\n  \"photo\": \"{{userphoto}}\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/users"
+					},
+					"response": [
+						{
+							"id": "e524ce27-653e-4551-a14c-86f27d0f4614",
+							"name": "User successfully created.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"company\": \"<string>\",\n  \"email\": \"<string>\",\n  \"linkedin\": \"<string>\",\n  \"name\": \"<string>\",\n  \"password\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"photo\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/users"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						},
+						{
+							"id": "d4af6aed-37ac-4cf1-b3a9-938fe64128d4",
+							"name": "Unable to create user.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"company\": \"<string>\",\n  \"email\": \"<string>\",\n  \"linkedin\": \"<string>\",\n  \"name\": \"<string>\",\n  \"password\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"photo\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{baseUrl}}/users"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Register an User to an Event",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a9c00759-acde-4f5b-99af-904fb4bf404e",
+								"exec": [
+									"pm.test('Register user to Event', function (){\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "17d031d6-afd6-448b-bbb7-8e395f1c993a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/events/:event_id/add-participant/:participant_id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"events",
+								":event_id",
+								"add-participant",
+								":participant_id"
+							],
+							"variable": [
+								{
+									"key": "event_id",
+									"value": "{{event_id}}"
+								},
+								{
+									"key": "participant_id",
+									"value": "{{user_id2}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "85e883ff-e6f6-4e16-ad3e-439d3ae47d4e",
+							"name": "Participant successfully added to event.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/events/:event_id/add-participant/:participant_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"events",
+										":event_id",
+										"add-participant",
+										":participant_id"
+									],
+									"variable": [
+										{
+											"key": "event_id"
+										},
+										{
+											"key": "participant_id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						},
+						{
+							"id": "2283ce8c-821a-4e67-9c12-26ade760b277",
+							"name": "Unable to add participant to event.",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/events/:event_id/add-participant/:participant_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"events",
+										":event_id",
+										"add-participant",
+										":participant_id"
+									],
+									"variable": [
+										{
+											"key": "event_id"
+										},
+										{
+											"key": "participant_id"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Delete Event",
+					"id": "f7ab2654-f7d8-41b0-af80-c68629019120",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/events/:event_id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"events",
+								":event_id"
+							],
+							"variable": [
+								{
+									"key": "event_id",
+									"value": "{{event_id}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "80c75bd3-c14b-4620-b61b-7dc3d2983589",
+							"name": "Event successfully retrieved.",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/events/:event_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"events",
+										":event_id"
+									],
+									"variable": [
+										{
+											"key": "event_id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						},
+						{
+							"id": "ca9abae9-7176-4e94-a766-0527a648df4c",
+							"name": "Unable to retrieve event.",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/events/:event_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"events",
+										":event_id"
+									],
+									"variable": [
+										{
+											"key": "event_id"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Search Event After Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ea2e2e7e-f037-4fa3-a77f-0ecf7c063cdc",
+								"exec": [
+									"pm.test('Search Event Should Fail', function (){\r",
+									"    pm.response.to.have.status(400)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "3d4a1ff6-4965-4556-ae8e-667442c8f611",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/events/:event_id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"events",
+								":event_id"
+							],
+							"variable": [
+								{
+									"id": "7fc78188-8b54-4318-b662-43eff68a6f87",
+									"key": "event_id",
+									"value": "{{event_id}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "5a0b5a6f-60f5-4959-a833-fb5f7c868803",
+							"name": "Event successfully retrieved.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/events/:event_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"events",
+										":event_id"
+									],
+									"variable": [
+										{
+											"key": "event_id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						},
+						{
+							"id": "4ffce45a-7a3e-4d89-b875-399d8dfbf1b5",
+							"name": "Unable to retrieve event.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/events/:event_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"events",
+										":event_id"
+									],
+									"variable": [
+										{
+											"key": "event_id"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Delete User Participant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c053e4ec-d2f1-43e3-9162-7f4d02d5f24f",
+								"exec": [
+									"pm.test('Delete User', function (){\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "d8c40b52-6e5d-41e2-8aa8-a0a9af350d32",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:user_id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":user_id"
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "{{user_id2}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "7ee4864b-baae-4e07-b022-b0c1c3d5676b",
+							"name": "User successfully retrieved.",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/:user_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":user_id"
+									],
+									"variable": [
+										{
+											"key": "user_id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						},
+						{
+							"id": "e58f3353-16fb-4676-81ae-dbcabcba5613",
+							"name": "Unable to retrieve user.",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/:user_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										":user_id"
+									],
+									"variable": [
+										{
+											"key": "user_id"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						}
+					]
+				}
+			],
+			"id": "97501943-af3b-4234-886e-10e0a90aedc9"
+		}
+	]
+}
